@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ level.title }} — SignaLearn{% endblock %}
+
+{% block content %}
+<div class="screen active" id="screen-lesson">
+  <div class="lesson-header">
+    <a href="{% url 'home' %}" class="close-btn">✕</a>
+
+    <div style="flex: 1;">
+      <div style="font-size: 12px; font-weight: 900; color: var(--muted);">
+        {{ level.category }}
+      </div>
+
+      <div style="font-size: 16px; font-weight: 900;">
+        {{ level.title }}
+      </div>
+
+      <div class="xp-bar-wrap" style="margin-top: 8px;">
+        <div class="xp-bar-fill" id="xp-bar" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="heart-row" id="hearts">❤️❤️❤️</div>
+  </div>
+
+  <div class="lesson-body" id="lesson-body"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const resultUrl = "{% url 'result' level.slug %}";
+  const lessonSlug = "{{ level.slug }}";
+  const lessonTitle = "{{ level.title }}";
+</script>
+<script src="{% static 'js/lesson.js' %}"></script>
+{% endblock %}

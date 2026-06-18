@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block title %}Início — SignaLearn{% endblock %}
+
+{% block content %}
+<div class="screen active" id="screen-home">
+  <div class="home-header">
+    <div class="greeting">
+      {{ greeting }}, {{ user.first_name|default:user.username }}! 👋
+    </div>
+
+    <h1>Continue aprendendo Libras</h1>
+
+    <div class="streak-bar">
+      <div class="streak-pill">🔥 {{ profile.current_streak }} dia(s) seguido(s)</div>
+      <div class="streak-pill">⚡ {{ profile.xp_total }} XP</div>
+      <div class="streak-pill">💎 Liga {{ profile.league }}</div>
+    </div>
+  </div>
+
+  <div class="home-content">
+    <div class="home-dashboard">
+
+      <section class="continue-panel">
+        <div class="section-title">Continue de onde parou</div>
+
+        {% if current_level_data %}
+          <a href="{% url 'lesson' current_level_data.level.slug %}" class="continue-card">
+            <div class="lesson-icon green">
+              {{ current_level_data.level.icon }}
+            </div>
+
+            <div style="flex:1">
+              <div class="lesson-label">
+                UNIDADE 1 • LIÇÃO {{ current_level_data.level.order }}
+              </div>
+
+              <div class="lesson-name">
+                {{ current_level_data.level.title }}
+              </div>
+
+              <div class="lesson-progress-bar">
+                <div class="fill" style="width:{{ current_level_data.progress_percent }}%"></div>
+              </div>
+            </div>
+
+            <div style="font-size:14px;font-weight:800;color:var(--green)">
+              {{ current_level_data.progress_percent }}%
+            </div>
+          </a>
+        {% else %}
+          <div class="continue-card">
+            <div class="lesson-icon green">🏁</div>
+
+            <div style="flex:1">
+              <div class="lesson-label">JORNADA COMPLETA</div>
+              <div class="lesson-name">Você concluiu todos os níveis disponíveis</div>
+
+              <div class="lesson-progress-bar">
+                <div class="fill" style="width:100%"></div>
+              </div>
+            </div>
+
+            <div style="font-size:14px;font-weight:800;color:var(--green)">100%</div>
+          </div>
+        {% endif %}
+
+        <div class="desktop-summary-grid">
+          <div class="profile-stat">
+            <div class="value">{{ profile.xp_total }} ⚡</div>
+            <div class="label">XP Total</div>
+          </div>
+
+          <div class="profile-stat">
+            <div class="value">{{ profile.current_streak }} 🔥</div>
+            <div class="label">Sequência</div>
+          </div>
+
+          <div class="profile-stat">
+            <div class="value">{{ profile.signs_learned }}</div>
+            <div class="label">Sinais aprendidos</div>
+          </div>
+
+          <div class="profile-stat">
+            <div class="value">{{ profile.completed_lessons }}</div>
+            <div class="label">Lições completas</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="learning-path-panel">
+        <div class="section-title">Seu caminho de aprendizado</div>
+
+        <div class="desktop-path">
+
+          {% for item in levels_data %}
+            <div class="path-row">
+              {% if item.is_unlocked %}
+                <a href="{% url 'lesson' item.level.slug %}"
+                   class="path-node {{ item.status }}"
+                   title="{{ item.level.title }}">
+                  {{ item.level.icon }}
+
+                  {% if item.is_completed %}
+                    <div class="star-badge">⭐</div>
+                  {% endif %}
+
+                  <div class="node-tooltip">
+                    {{ item.tooltip }}
+                  </div>
+                </a>
+              {% else %}
+                <div class="path-node locked" title="{{ item.level.title }}">
+                  {{ item.level.icon }}
+
+                  <div class="node-tooltip">
+                    {{ item.tooltip }}
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+
+            {% if not forloop.last %}
+              <div class="path-connector {% if item.is_completed %}done{% endif %}"></div>
+            {% endif %}
+          {% endfor %}
+
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

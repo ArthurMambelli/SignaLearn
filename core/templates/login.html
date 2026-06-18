@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login — SignaLearn{% endblock %}
+
+{% block content %}
+<div class="auth-screen">
+
+  <section class="auth-hero">
+    <div class="auth-brand">
+      <img src="{% static 'Logo_SignaLearn.png' %}" alt="SignaLearn" class="auth-brand-logo">
+    </div>
+
+    <div class="auth-hero-content">
+      <h1>Continue sua jornada em Libras.</h1>
+      <p>
+        Acesse sua conta para acompanhar seu XP, sequência,
+        lições concluídas e evolução no aprendizado.
+      </p>
+    </div>
+
+    <div class="auth-pills">
+      <div class="auth-pill">⚡ XP real</div>
+      <div class="auth-pill">🔥 Sequência</div>
+      <div class="auth-pill">🏆 Ranking</div>
+    </div>
+  </section>
+
+  <section class="auth-form-area">
+    <div class="auth-card">
+      <h2>Entrar</h2>
+      <p>Use seu usuário e senha para acessar sua conta.</p>
+
+      {% if form.errors %}
+        <div class="auth-error">
+          Usuário ou senha inválidos. Verifique os dados e tente novamente.
+        </div>
+      {% endif %}
+
+      <form method="post" class="auth-form">
+        {% csrf_token %}
+
+        <div class="auth-field">
+          {{ form.username.label_tag }}
+          {{ form.username }}
+        </div>
+
+        <div class="auth-field">
+          {{ form.password.label_tag }}
+          {{ form.password }}
+        </div>
+
+        <button class="auth-submit" type="submit">
+          Entrar
+        </button>
+      </form>
+
+      <div class="auth-switch">
+        Ainda não tem conta?
+        <a href="{% url 'register' %}">Criar cadastro</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

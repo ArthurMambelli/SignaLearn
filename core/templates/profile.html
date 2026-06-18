@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title %}Perfil — SignaLearn{% endblock %}
+
+{% block content %}
+<div class="screen active" id="screen-profile">
+
+  <div class="profile-header">
+    <div class="profile-avatar">🌟</div>
+
+    <div class="profile-name">
+      {{ user.first_name|default:user.username }}
+    </div>
+
+    <div class="profile-level">
+      Nível {{ profile.level }} • Aprendiz de Libras
+    </div>
+  </div>
+
+  <div class="profile-content">
+    <div class="profile-desktop-grid">
+
+      <section>
+        <div class="section-title">Conquistas</div>
+
+        <div class="badges-grid">
+          <div class="badge-item">
+            <span class="badge-emoji">🔥</span>
+            <div class="badge-name">
+              {{ profile.current_streak }} dias
+            </div>
+          </div>
+
+          <div class="badge-item">
+            <span class="badge-emoji">🤟</span>
+            <div class="badge-name">1ª lição</div>
+          </div>
+
+          <div class="badge-item">
+            <span class="badge-emoji">🏅</span>
+            <div class="badge-name">
+              Liga {{ profile.league }}
+            </div>
+          </div>
+
+          <div class="badge-item">
+            <span class="badge-emoji">💬</span>
+            <div class="badge-name">
+              {{ profile.signs_learned }} sinais
+            </div>
+          </div>
+
+          <div class="badge-item" style="opacity:0.3">
+            <span class="badge-emoji">🌈</span>
+            <div class="badge-name">Cores</div>
+          </div>
+
+          <div class="badge-item" style="opacity:0.3">
+            <span class="badge-emoji">🍎</span>
+            <div class="badge-name">Alimentos</div>
+          </div>
+
+          <div class="badge-item" style="opacity:0.3">
+            <span class="badge-emoji">👨‍👩‍👧</span>
+            <div class="badge-name">Família</div>
+          </div>
+
+          <div class="badge-item" style="opacity:0.3">
+            <span class="badge-emoji">💯</span>
+            <div class="badge-name">Perfeito</div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">Estatísticas</div>
+
+        <div class="stats-grid">
+          <div class="profile-stat">
+            <div class="value">{{ profile.xp_total }} ⚡</div>
+            <div class="label">XP Total</div>
+          </div>
+
+          <div class="profile-stat">
+            <div class="value">{{ profile.current_streak }} 🔥</div>
+            <div class="label">Sequência atual</div>
+          </div>
+
+          <div class="profile-stat">
+            <div class="value">{{ profile.signs_learned }}</div>
+            <div class="label">Sinais aprendidos</div>
+          </div>
+
+          <div class="profile-stat">
+            <div class="value">{{ profile.completed_lessons }}</div>
+            <div class="label">Lições completas</div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <section style="margin-top: 28px;">
+      <div class="section-title">Últimas atividades</div>
+
+      {% if attempts %}
+        <div class="rank-content">
+          {% for attempt in attempts %}
+            <div class="rank-item">
+              <div class="rank-avatar">🤟</div>
+
+              <div class="rank-name">
+                {{ attempt.lesson_name }}
+              </div>
+
+              <div class="rank-xp">
+                ⚡ {{ attempt.xp_earned }} XP • {{ attempt.accuracy }}%
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="continue-panel">
+          <p>Você ainda não completou nenhuma lição.</p>
+        </div>
+      {% endif %}
+    </section>
+
+  </div>
+
+</div>
+{% endblock %}

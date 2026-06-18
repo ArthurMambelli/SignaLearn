@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Cadastro — SignaLearn{% endblock %}
+
+{% block content %}
+<div class="auth-screen">
+
+  <section class="auth-hero">
+    <div class="auth-brand">
+      <div class="auth-brand-icon">🌟</div>
+
+      <div>
+        <div class="auth-brand-name">SignaLearn</div>
+        <div class="auth-brand-subtitle">Aprenda Libras</div>
+      </div>
+    </div>
+
+    <div class="auth-hero-content">
+      <h1>Comece seu aprendizado de forma personalizada.</h1>
+      <p>
+        Crie sua conta para salvar progresso, registrar lições,
+        ganhar XP e acompanhar sua evolução.
+      </p>
+    </div>
+
+    <div class="auth-pills">
+      <div class="auth-pill">📚 Lições</div>
+      <div class="auth-pill">💾 Progresso salvo</div>
+      <div class="auth-pill">🎯 Estatísticas</div>
+    </div>
+  </section>
+
+  <section class="auth-form-area">
+    <div class="auth-card">
+      <h2>Criar conta</h2>
+      <p>Preencha seus dados para começar a usar o SignaLearn.</p>
+
+      {% if form.errors %}
+        <div class="auth-error">
+          Verifique os campos abaixo. Pode haver usuário já cadastrado,
+          senha inválida ou confirmação diferente.
+        </div>
+      {% endif %}
+
+      <form method="post" class="auth-form">
+        {% csrf_token %}
+
+        <div class="auth-field">
+          {{ form.first_name.label_tag }}
+          {{ form.first_name }}
+        </div>
+
+        <div class="auth-field">
+          {{ form.username.label_tag }}
+          {{ form.username }}
+        </div>
+
+        <div class="auth-field">
+          {{ form.email.label_tag }}
+          {{ form.email }}
+        </div>
+
+        <div class="auth-field">
+          {{ form.password.label_tag }}
+          {{ form.password }}
+        </div>
+
+        <div class="auth-field">
+          {{ form.password_confirm.label_tag }}
+          {{ form.password_confirm }}
+        </div>
+
+        <button class="auth-submit" type="submit">
+          Cadastrar
+        </button>
+      </form>
+
+      <div class="auth-switch">
+        Já tem conta?
+        <a href="{% url 'login' %}">Entrar</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

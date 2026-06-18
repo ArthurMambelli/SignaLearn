@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Ranking — SignaLearn{% endblock %}
+
+{% block content %}
+<div class="screen active" id="screen-ranking">
+  <div class="rank-header">
+    <h2>🏆 Liga {{ user.profile.league }}</h2>
+    <p>Top aprendizes de Libras dessa semana</p>
+  </div>
+
+  <div class="rank-content">
+    {% for profile in profiles %}
+      <div class="rank-item {% if profile.user == user %}me{% endif %}">
+        <div class="rank-pos">
+          {% if forloop.counter == 1 %}
+            🥇
+          {% elif forloop.counter == 2 %}
+            🥈
+          {% elif forloop.counter == 3 %}
+            🥉
+          {% else %}
+            {{ forloop.counter }}
+          {% endif %}
+        </div>
+
+        <div class="rank-avatar">
+          {% if profile.user == user %}
+            🌟
+          {% else %}
+            🤟
+          {% endif %}
+        </div>
+
+        <div class="rank-name">
+          {{ profile.user.first_name|default:profile.user.username }}
+          {% if profile.user == user %}(você){% endif %}
+        </div>
+
+        <div class="rank-xp">⚡ {{ profile.xp_total }} XP</div>
+      </div>
+    {% empty %}
+      <p>Nenhum usuário no ranking ainda.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

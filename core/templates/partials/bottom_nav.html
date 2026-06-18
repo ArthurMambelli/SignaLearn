@@ -1,0 +1,42 @@
+{% load static %}
+<aside class="side-nav">
+  <div class="brand">
+    <div class="brand-icon brand-logo-box">
+      <img src="{% static 'LogoPNG.png' %}" alt="Logo SignaLearn" class="brand-logo-img">
+    </div>
+    <div>
+      <div class="brand-name">SignaLearn</div>
+      <div class="brand-subtitle">Aprenda Libras</div>
+    </div>
+  </div>
+
+  <nav class="nav-menu">
+  <a href="{% url 'home' %}" class="nav-btn {% if active_tab == 'home' %}active{% endif %}">
+    <span class="nav-icon">🏠</span>
+    <span>Início</span>
+  </a>
+
+  <a href="{% url 'ranking' %}" class="nav-btn {% if active_tab == 'ranking' %}active{% endif %}">
+    <span class="nav-icon">🏆</span>
+    <span>Ranking</span>
+  </a>
+
+  <a href="{% url 'profile' %}" class="nav-btn {% if active_tab == 'profile' %}active{% endif %}">
+    <span class="nav-icon">👤</span>
+    <span>Perfil</span>
+  </a>
+
+  <a href="{% url 'logout' %}" class="nav-btn">
+    <span class="nav-icon">🚪</span>
+    <span>Sair</span>
+  </a>
+</nav>
+
+  <div class="side-card">
+    <div class="side-card-title">Progresso do nível</div>
+    <div class="side-card-xp">⚡ {{ profile.xp_total|default:0 }} XP</div>
+    <div class="mini-progress">
+      <div class="mini-progress-fill" style="width: {{ xp_progress_percent|default:0 }}%"></div>
+    </div>
+  </div>
+</aside>

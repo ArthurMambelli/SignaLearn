@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Resultado — SignaLearn{% endblock %}
+
+{% block content %}
+<div class="screen active result-screen" id="screen-result">
+  <div class="result-trophy">🏅</div>
+
+  <div class="result-title">
+    Incrível, {{ user.first_name|default:user.username }}!
+  </div>
+
+  <div class="result-sub">
+    Você completou a lição de {{ lesson_name }}!
+  </div>
+
+  <div class="result-stats">
+    <div class="stat-card">
+      <div class="stat-icon">⚡</div>
+      <div class="stat-value">+{{ xp_earned }} XP</div>
+      <div class="stat-label">Ganho</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">🔥</div>
+      <div class="stat-value">{{ profile.current_streak }}</div>
+      <div class="stat-label">Sequência</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">🎯</div>
+      <div class="stat-value">{{ accuracy }}%</div>
+      <div class="stat-label">Acertos</div>
+    </div>
+  </div>
+
+  <a href="{% url 'home' %}" class="home-btn">
+    Voltar ao início 🏠
+  </a>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{% if leveled_up %}
+<script>
+  Swal.fire({
+    title: 'Você subiu de nível!',
+    html: `
+      <div style="font-size:54px; margin-bottom:12px;">🎉</div>
+      <strong>Nível {{ old_level }} → Nível {{ new_level }}</strong>
+      <p style="margin-top:10px;">
+        Continue praticando para avançar ainda mais no SignaLearn.
+      </p>
+    `,
+    confirmButtonText: 'Continuar',
+    confirmButtonColor: '#6C5CE7',
+    background: '#ffffff',
+    color: '#2D3748'
+  });
+</script>
+{% endif %}
+{% endblock %}
